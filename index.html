@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coded Message Viewer</title>
+
+    <!-- 💌 Custom Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>"
+    />
+
+    <style>
+      body {
+        font-family: monospace;
+        background-color: #f9f4f7;
+        color: #333;
+        padding: 2rem;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      h1 {
+        font-family: "Segoe UI", sans-serif;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      #inputArea {
+        width: 100%;
+        height: 250px;
+        font-family: monospace;
+        padding: 10px;
+        border: 2px dashed #ccc;
+        background: #fff;
+        margin-bottom: 1rem;
+        resize: vertical;
+      }
+
+      #renderArea {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        background-color: #fff;
+        border-radius: 10px;
+        min-height: 200px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      #styleSnippet,
+      .exampleCSS {
+        background: #1e1e1e;
+        color: #c5c5c5;
+        padding: 1rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        margin-bottom: 1rem;
+      }
+
+      button,
+      select {
+        background-color: #f09bb8;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+      }
+
+      .footer {
+        margin-top: 2rem;
+        font-style: italic;
+        color: #888;
+        text-align: center;
+      }
+
+      small {
+        color: #777;
+        display: block;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      /* ==== Theme: Cute ==== */
+      .theme-cute h1,
+      .theme-cute h2 {
+        color: #d0638a;
+        font-family: "Trebuchet MS", sans-serif;
+      }
+
+      .theme-cute p {
+        font-family: "Segoe UI", sans-serif;
+        line-height: 1.7;
+        color: #444;
+      }
+
+      .theme-cute ul {
+        margin-left: 1.5rem;
+      }
+      .theme-cute li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* ==== Theme: Sci-Fi ==== */
+      .theme-scifi {
+        background-color: #0e0e2c;
+        color: #90e0ef;
+        font-family: "Orbitron", sans-serif;
+      }
+
+      .theme-scifi h1,
+      .theme-scifi h2 {
+        color: #00f7ff;
+      }
+
+      .theme-scifi p,
+      .theme-scifi li {
+        color: #b0faff;
+      }
+
+      /* ==== Theme: Fantasy ==== */
+      .theme-fantasy {
+        background-color: #fff8f0;
+        color: #4b2e2e;
+        font-family: "Garamond", serif;
+      }
+
+      .theme-fantasy h1,
+      .theme-fantasy h2 {
+        color: #7c4a31;
+        text-shadow: 1px 1px #d6a76c;
+      }
+
+      .theme-fantasy p {
+        font-style: italic;
+      }
+
+      /* ==== Theme: Dark Romance ==== */
+      .theme-romance {
+        background-color: #1e0f13;
+        color: #f5c2d0;
+        font-family: "Georgia", serif;
+      }
+
+      .theme-romance h1,
+      .theme-romance h2 {
+        color: #ff85b3;
+      }
+
+      .theme-romance p {
+        line-height: 1.8;
+      }
+
+      /* ==== Theme: Disney ==== */
+      .theme-disney {
+        background-color: #fff0f5;
+        color: #2b2b90;
+        font-family: "Comic Sans MS", cursive;
+      }
+
+      .theme-disney h1,
+      .theme-disney h2 {
+        color: #fa8072;
+      }
+
+      .theme-disney p {
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Coded Message Viewer 💌</h1>
+
+    <p>Paste any of my HTML messages below and watch it transform ✨</p>
+
+    <button id="insertExample">Insert Example Message</button>
+    <small><em>Live preview updates as you type</em></small>
+
+    <textarea
+      id="inputArea"
+      placeholder="Paste HTML message here..."
+    ></textarea>
+    <br />
+
+    <select id="themeSelect">
+      <option value="cute">🌸 Cute</option>
+      <option value="scifi">🛸 Sci-Fi</option>
+      <option value="fantasy">🧝 Fantasy</option>
+      <option value="romance">🖤 Dark Romance</option>
+      <option value="disney">🎠 Disney</option>
+    </select>
+
+    <div id="renderArea" class="theme-cute"></div>
+
+    <h2>🎨 How Does CSS Work?</h2>
+    <p>
+      <em
+        >Think of CSS like giving your message a new outfit. It doesn’t change
+        the words—it just changes how they *look*!</em
+      >
+    </p>
+    <pre
+      class="exampleCSS"
+    ><code>/* This changes all &lt;h1&gt; titles in a theme to pink and makes them use a cute font */
+.theme-cute h1 {
+  color: #d0638a;
+  font-family: 'Trebuchet MS', sans-serif;
+}</code></pre>
+
+    <h3>🧵 Style Code for This Theme:</h3>
+    <pre id="styleSnippet"></pre>
+
+    <div class="footer">Coded with care by the ChalkSeller 🧠💘</div>
+
+    <script>
+      const inputArea = document.getElementById("inputArea");
+      const renderArea = document.getElementById("renderArea");
+      const insertBtn = document.getElementById("insertExample");
+      const themeSelect = document.getElementById("themeSelect");
+      const styleSnippet = document.getElementById("styleSnippet");
+
+      const themes = {
+        cute: `.theme-cute h1, h2 { color: #d0638a; font-family: Trebuchet MS; }
+.theme-cute p { font-family: Segoe UI; line-height: 1.7; color: #444; }`,
+
+        scifi: `.theme-scifi { background: #0e0e2c; color: #90e0ef; font-family: Orbitron; }
+.theme-scifi h1, h2 { color: #00f7ff; }`,
+
+        fantasy: `.theme-fantasy { background: #fff8f0; color: #4b2e2e; font-family: Garamond; }
+.theme-fantasy h1, h2 { color: #7c4a31; text-shadow: 1px 1px #d6a76c; }`,
+
+        romance: `.theme-romance { background: #1e0f13; color: #f5c2d0; font-family: Georgia; }
+.theme-romance h1, h2 { color: #ff85b3; }`,
+
+        disney: `.theme-disney { background: #fff0f5; color: #2b2b90; font-family: Comic Sans MS; }
+.theme-disney h1, h2 { color: #fa8072; }`,
+      };
+
+      inputArea.addEventListener("input", () => {
+        renderArea.innerHTML = inputArea.value;
+      });
+
+      insertBtn.addEventListener("click", () => {
+        const example = `<h1>Hi 💖</h1><p>This is where your special messages will show up!<br>Go ahead and paste a new one whenever you want.</p>`;
+        inputArea.value = example;
+        renderArea.innerHTML = example;
+      });
+
+      themeSelect.addEventListener("change", () => {
+        Object.keys(themes).forEach((t) =>
+          renderArea.classList.remove(`theme-${t}`)
+        );
+        const selected = themeSelect.value;
+        renderArea.classList.add(`theme-${selected}`);
+        styleSnippet.textContent = themes[selected];
+      });
+
+      // Initial setup
+      inputArea.value = `<h1>Hello!</h1><p>This is where your coded message would go :)</p>`;
+      renderArea.innerHTML = inputArea.value;
+      styleSnippet.textContent = themes["cute"];
+    </script>
+  </body>
+</html>
